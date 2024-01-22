@@ -15,6 +15,9 @@ class Test(models.Model):
 class Examinee(models.Model):
     name = models.CharField(max_length=255)
 
+    def __str__(self) -> str:
+        return self.name
+
 
 class Question(models.Model):
     test = models.ForeignKey(
@@ -23,7 +26,7 @@ class Question(models.Model):
     question = models.TextField()
 
     def __str__(self) -> str:
-        return self.question.split()[:5]
+        return " ".join(self.question.split()[:5])
 
 
 class Answer(models.Model):
@@ -40,3 +43,6 @@ class Answer(models.Model):
         to=Examinee, on_delete=models.CASCADE, related_name="answers"
     )
     choice = models.CharField(choices=Choices.choices, max_length=255)
+
+    def __str__(self) -> str:
+        return self.choice
