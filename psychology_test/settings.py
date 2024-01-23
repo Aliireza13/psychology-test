@@ -124,6 +124,9 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGOUT_URL = "/logout/"
+LOGIN_REDIRECT_URL = "/dashboard/"
+
 # DJANGO-JAZZMIN
 
 JAZZMIN_UI_TWEAKS = {
