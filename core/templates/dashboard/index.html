@@ -1,9 +1,9 @@
 {% extends 'base/admin.html' %}
 {% block title %}
-    صفحه اصلی
+صفحه اصلی
 {% endblock title %}
 {% block head %}
-    لیست شرکت کنندگان
+لیست شرکت کنندگان
 {% endblock head %}
 {% block main %}
 <div class="row">
@@ -27,8 +27,10 @@
             <div class="card-header">
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 250px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="جستجو در بین شرکت کنندگان">
-
+                        <form method="get">
+                            <input type="text" name="query" class="form-control float-right"
+                                placeholder="جستجو در بین شرکت کنندگان">
+                        </form>
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
@@ -46,10 +48,10 @@
                     </thead>
                     <tbody>
                         {% for examinee in examinees %}
-                            <tr>
-                                <th>{{ examinee.name }}</th>
-                                <th>{{ examinee.date }}</th>
-                            </tr>
+                        <tr>
+                            <th>{{ examinee.name }}</th>
+                            <th>{{ examinee.date }}</th>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
