@@ -1,0 +1,111 @@
+{% extends 'base/dashboard.html' %}
+{% block title %}
+اطلاعات کاربر
+{% endblock title %}
+{% block head %}
+اطلاعات کاربر "{{ examinee.name }}"
+{% endblock head %}
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'core:user_info' examinee.id %}">اطلاعات "{{ examinee.name }}"</a></li>
+{% endblock breadcrumb %}
+{% block main %}
+<h5 class="mb-2 mt-4">نمودار نتایح برای آزمون {{ test.title }}</h5>
+<div class="card card-primary card-outline">
+    <div class="card-header">
+        <h3 class="card-title">
+            <i class="far fa-chart-bar"></i>
+            نتایج {{ test.title }}
+        </h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div id="bar-chart" style="height: 300px; padding: 0px; position: relative;">
+            <canvas class="flot-base"
+                style="direction: ltr; position: absolute; right: 0px; top: 0px; width: 660px; height: 300px;"
+                width="1000" height="339">
+            </canvas>
+            <canvas class="flot-overlay"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 660px; height: 300px;"
+                width="747" height="339">
+            </canvas>
+        </div>
+    </div>
+    <!-- /.card-body-->
+</div>
+<h5 class="mb-2 mt-4">جواب های {{ examinee.name }} برای آزمون {{ test.title }}</h5>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">لیست جواب ها</h3>
+
+                <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>سوال</th>
+                            <th>جواب</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        {% for  in  %}
+                            
+                        {% endfor %}
+                            
+                        <tr>
+                            <td>183</td>
+                            <td>John Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-success">Approved</span></td>
+                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                        </tr>
+                        <tr>
+                            <td>219</td>
+                            <td>Alexander Pierce</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-warning">Pending</span></td>
+                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                        </tr>
+                        <tr>
+                            <td>657</td>
+                            <td>Bob Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-primary">Approved</span></td>
+                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                        </tr>
+                        <tr>
+                            <td>175</td>
+                            <td>Mike Doe</td>
+                            <td>11-7-2014</td>
+                            <td><span class="tag tag-danger">Denied</span></td>
+                            <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+</div>
+{% endblock main %}

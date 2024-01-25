@@ -49,7 +49,7 @@
                     <tbody>
                         {% for examinee in examinees %}
                         <tr>
-                            <th>{{ examinee.name }}</th>
+                            <th><a href="{% url 'core:user_info' examinee.id %}">{{ examinee.name }}</a></th>
                             <th>{{ examinee.date }}</th>
                         </tr>
                         {% endfor %}
