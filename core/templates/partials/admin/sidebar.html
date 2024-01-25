@@ -16,7 +16,7 @@
                     alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ user.get_full_name }}</a>
+                <a href="{% url 'admin:auth_user_change' user.pk %}" class="d-block">{{ user.get_full_name }}</a>
             </div>
         </div>
 
@@ -43,7 +43,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 <i class="fa fa-edit nav-icon"></i>
-                                <p>تست ها</p>
+                                <p>آزمون ها</p>
                             </a>
                         </li>
                     </ul>
