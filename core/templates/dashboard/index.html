@@ -10,7 +10,7 @@
     <!-- ./col -->
     <div class="col-lg-12 col-24">
         <!-- small box -->
-        <div class="small-box bg-warning">
+        <div class="small-box bg-blue">
             <div class="inner">
                 <h3>{{ examinees|length }}</h3>
                 <p>مجموع تعداد شرکت کنندگان</p>
@@ -18,6 +18,9 @@
             <div class="icon">
                 <i class="fas fa-users"></i>
             </div>
+            <a href="{% url 'core:add_user' %}" class="small-box-footer">
+                اضافه کردن شرکت کننده <i class="fas fa-user-plus"></i>
+            </a>
         </div>
     </div>
 </div>

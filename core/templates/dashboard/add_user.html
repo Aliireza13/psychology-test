@@ -1,0 +1,32 @@
+{% extends 'base/dashboard.html' %}
+{% block title %}
+اضافه کردن کاربر
+{% endblock title %}
+{% block head %}
+اضافه کردن شرکت کننده مجاز
+{% endblock head %}
+{% block breadcrumb %}
+<li class="breadcrumb-item active"><a href="{% url 'core:add_user' %}">اضافه کردن شرکت کننده</a></li>
+{% endblock breadcrumb %}
+{% block main %}
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">فرم اسم</h3>
+    </div>
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form role="form">
+        <div class="card-body">
+            <label for="exampleInputName">اسم شرکت کننده</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" placeholder="اسم شرکت کننده را وارد کنید...">
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="btn btn-primary">اضافه کردن</button>
+            </div>
+    </form>
+</div>
+{% endblock main %}

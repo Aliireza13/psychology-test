@@ -46,3 +46,8 @@ def user_answers(request: HttpRequest, user_id: int, test_id: int):
         ).filter(similarity__gt=0.1)
     context = {"examinee": user, "test": test, "answers": all_questions}
     return render(request, "dashboard/test_info.html", context)
+
+
+@login_required
+def add_user(request: HttpRequest):
+    return render(request, "dashboard/add_user.html")
