@@ -1,9 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 
 from .models import Examinee, Test, Answer, Question
+from .forms import AddUserForm
 from itertools import chain
 
 
@@ -50,4 +51,12 @@ def user_answers(request: HttpRequest, user_id: int, test_id: int):
 
 @login_required
 def add_user(request: HttpRequest):
-    return render(request, "dashboard/add_user.html")
+    if request.method == "POST":
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            examinee = Examinee.objects.create(name=form.cleaned_data.get('name'))
+            return redirect("core:dashboard")
+    else:
+        form = AddUserForm()
+    context = {"form": form}
+    return render(request, "dashboard/add_user.html", context)
