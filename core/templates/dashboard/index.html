@@ -45,6 +45,7 @@
                 <table class="table table-head-fixed">
                     <thead>
                         <tr>
+                            <th>آیدی شرکت کننده</th>
                             <th>نام شرکت کننده</th>
                             <th>تاریخ ثبت نام</th>
                         </tr>
@@ -52,6 +53,7 @@
                     <tbody>
                         {% for examinee in examinees %}
                         <tr>
+                            <th><a href="{% url 'core:user_info' examinee.id %}">{{ examinee.id }}</a></th>
                             <th><a href="{% url 'core:user_info' examinee.id %}">{{ examinee.name }}</a></th>
                             <th>{{ examinee.date }}</th>
                         </tr>
