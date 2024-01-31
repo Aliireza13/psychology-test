@@ -3,7 +3,7 @@
 اطلاعات کاربر
 {% endblock title %}
 {% block head %}
-اطلاعات کاربر "{{ examinee.name }}"
+اطلاعات کاربر "<a href="{% url 'core:user_info' examinee.id %}">{{ examinee.name }}</a>" در آزمون "<a href="#">{{ test.title }}</a>"
 {% endblock head %}
 {% block breadcrumb %}
 <li class="breadcrumb-item active"><a href="{% url 'core:user_info' examinee.id %}">اطلاعات "{{ examinee.name }}"</a>
@@ -65,14 +65,14 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>سوال</th>
+                            <th class="col-lg-8">سوال</th>
                             <th>جواب</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for answer in answers %}
                         <tr>
-                            <td>{{ answer.question }}</td>
+                            <td class="col-lg-8">{{ answer.question }}</td>
                             <td>{% if answer.choice %}{{ answer.choice }}{% else %}بدون جواب{% endif %}</td>
                         </tr>
                         {% endfor %}

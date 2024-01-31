@@ -6,17 +6,18 @@
 اطلاعات کاربر "{{ examinee.name }}"
 {% endblock head %}
 {% block breadcrumb %}
-<li class="breadcrumb-item active"><a href="{% url 'core:user_info' examinee.id %}">اطلاعات "{{ examinee.name }}"</a></li>
+<li class="breadcrumb-item active"><a href="{% url 'core:user_info' examinee.id %}">اطلاعات "{{ examinee.name }}"</a>
+</li>
 {% endblock breadcrumb %}
 {% block main %}
 <h5 class="mb-2 mt-4">آزمون ها</h5>
 <div class="row">
     {% for test in tests %}
-    <div class="col-lg-3 col-6">
+    {% if forloop.counter > 2 %}
+    <div class="col-lg-4 col-6">
         <div class="small-box bg-info">
             <div class="inner">
                 <h4>{{test.title}}</h4>
-
                 <p>{{ test.questions.all|length }} سوال</p>
             </div>
             <div class="icon">
@@ -27,7 +28,24 @@
             </a>
         </div>
     </div>
-    {% endfor %}
+    {% else %}
+    <div class="col-lg-6 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h4>{{test.title}}</h4>
+                <p>{{ test.questions.all|length }} سوال</p>
+            </div>
+            <div class="icon">
+                <i class="fa fa-edit nav-icon"></i>
+            </div>
+            <a href="{% url 'core:user_answers' examinee.id test.id %}" class="small-box-footer">
+                اطلاعات بیشتر <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+
+{% endfor %}
 </div>
 <h5 class="mb-2 mt-4">نمودار نتایح آزمون {{ test.title }}</h5>
 <div class="card card-primary card-outline">
