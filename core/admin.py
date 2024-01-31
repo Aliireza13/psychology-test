@@ -16,16 +16,15 @@ class AnswerInline(admin.StackedInline):
 # Register your models here
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
-    list_display = ["title", "author", "date"]
-    list_display_links = ["title", "author", "date"]
-    list_filter = ["date", "author"]
+    list_display = ["title", "date"]
+    list_display_links = ["title" ,"date"]
+    list_filter = ["date"]
 
     ordering = ["date"]
 
     date_hierarchy = "date"
 
     search_fields = ["title", "author__first_name", "author__last_name"]
-    raw_id_fields = ["author"]
 
 
 @admin.register(Examinee)
