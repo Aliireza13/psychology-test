@@ -33,18 +33,13 @@ def user_detail(request: HttpRequest, user_id: int):
 
 @login_required
 def user_answers(request: HttpRequest, user_id: int, test_id: int):
-    user: Examinee = get_object_or_404(Examinee, id=user_id)
-    test = Test.objects.get(id=test_id)
-    answers = Answer.objects.filter(examinee=user, question__test=test)
-    answers_id = [answer.question.id for answer in answers]
-    all_questions = list(
+    user: Examinee = get_object_or_404(Examinee, id=user_id) # Get user
+    test = Test.objects.get(id=test_id) # Get test
+    answers = Answer.objects.filter(examinee=user, question__test=test) # Get all of user for a test
+    answers_id = [answer.question.id for answer in answers] # Get all of the answer's ids
+    all_questions = list( # Get all of the questions for a test
         chain(answers, Question.objects.filter(test=test).exclude(id__in=answers_id))
     )
-    query = request.GET.get("query")
-    if query:
-        answers = answers.annotate(
-            similarity=TrigramSimilarity("question__question", query)
-        ).filter(similarity__gt=0.1)
     context = {"examinee": user, "test": test, "answers": all_questions}
     return render(request, "dashboard/test_info.html", context)
 
