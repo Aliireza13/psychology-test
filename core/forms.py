@@ -18,3 +18,14 @@ class AddUserForm(forms.Form):
             raise forms.ValidationError(
                 f"کاربر '{name}'  وجود دارد لطفا اسم دیگری وارد کنید"
             )
+
+
+class SignInUserForm(AddUserForm):
+    
+    def clean_name(self):
+        name = self.cleaned_data.get("name")
+        try:
+            examinee = get_object_or_404(Examinee, name=name)
+        except Http404:
+            raise forms.ValidationError(f"ثبت نشده است! '{name}' کاربری با نام")
+        return name

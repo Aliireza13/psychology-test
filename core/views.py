@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 
 from .models import Examinee, Test, Answer, Question
-from .forms import AddUserForm
+from .forms import AddUserForm, SignInUserForm
 from itertools import chain
 
 
@@ -55,3 +55,15 @@ def add_user(request: HttpRequest):
         form = AddUserForm()
     context = {"form": form}
     return render(request, "dashboard/add_user.html", context)
+
+
+def index(request: HttpRequest):
+    if request.method == "POST":
+        form = SignInUserForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data.get("name")
+            pass
+    else:
+        form = SignInUserForm()
+    context = {"form": form}
+    return render(request, "core/index.html", context)
