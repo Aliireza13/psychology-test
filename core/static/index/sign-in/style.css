@@ -12,6 +12,10 @@
   text-decoration: none;
 }
 
+span {
+  color: red;
+}
+
 .conteiner {
   position: relative;
   width: 100%;

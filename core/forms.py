@@ -27,5 +27,5 @@ class SignInUserForm(AddUserForm):
         try:
             examinee = get_object_or_404(Examinee, name=name)
         except Http404:
-            raise forms.ValidationError(f"ثبت نشده است! '{name}' کاربری با نام")
+            raise forms.ValidationError(f"کاربری با اسم \"{name}\" ثبت نشده است!")
         return name

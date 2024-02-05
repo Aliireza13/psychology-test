@@ -16,18 +16,14 @@
             {% csrf_token %}
             <p>لطفا اسم خود را وارد کنید</p>
             <input type="text" placeholder="اسم شما" required name="name" />
-            <div>
-                {% if form.name.errors %}
-                <ul>
-                    {% for error in form.name.errors %}
-                    <li style="color: red;">{{ error }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
+            <div class="error-form">
+                {% if form.name.errors %} <br />
+                {% for error in form.name.errors %}<br />
+                <span>{{ error }}</span> <br />
+                {% endfor %}<br />
+                {% endif %}<br />
             </div>
-            <button type="submit">
-                مشاهده سوالات
-            </button>
+            <button type="submit">مشاهده سوالات</button>
         </form>
         <div class="blur-form"></div>
     </div>
