@@ -31,6 +31,8 @@ class TestAdmin(admin.ModelAdmin):
 
     search_fields = ["title"]
 
+    inlines = (ChoiceInline, )
+
 
 @admin.register(Examinee)
 class ExamineeInline(admin.ModelAdmin):
