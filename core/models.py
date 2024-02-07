@@ -30,23 +30,26 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
-    text = models.CharField(max_length=255)
-    score = models.PositiveIntegerField()
     test = models.ForeignKey(
         to=Test, on_delete=models.CASCADE, related_name="choices"
     )
+
+    text = models.CharField(max_length=255)
+    score = models.PositiveIntegerField()
 
     def __str__(self):
         return self.text
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(
-        to=Question, on_delete=models.CASCADE, related_name="answers"
-    )
     examinee = models.ForeignKey(
         to=Examinee, on_delete=models.CASCADE, related_name="answers"
     )
+
+    question = models.ForeignKey(
+        to=Question, on_delete=models.CASCADE, related_name="answers"
+    )
+
     choice = models.ForeignKey(
         to=Choice, on_delete=models.CASCADE, related_name="answers"
     )

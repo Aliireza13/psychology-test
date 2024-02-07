@@ -52,14 +52,12 @@ class AnswerAdmin(admin.ModelAdmin):
     list_filter = ["choice__text", "examinee"]
 
     search_fields = ["examinee"]
-    raw_id_fields = ["question"]
 
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
     list_display = ["text", "test"]
-    list_editable = ["test"]
+    list_display_links = list_display
     list_filter = ["test"]
 
     search_fields = ["test"]
-    raw_id_fields = ["test"]
