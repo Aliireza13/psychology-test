@@ -11,7 +11,7 @@
 {% block main %}
 <div class="card card-primary">
     <div class="card-header">
-        <h3 class="card-title">فرم اسم</h3>
+        <h3 class="card-title table">فرم اسم</h3>
     </div>
     <!-- /.card-header -->
     <!-- form start -->
@@ -26,16 +26,16 @@
                 <input name="name" type="text" class="form-control" placeholder="اسم شرکت کننده را وارد کنید...">
             </div>
             {% if form.name.errors %}
-                <ul>
-                    {% for error in form.name.errors  %}
-                        <li class="text-danger">{{ error }}</li>
-                    {% endfor %}
-                </ul>
+            <ul>
+                {% for error in form.name.errors %}
+                <li class="text-danger">{{ error }}</li>
+                {% endfor %}
+            </ul>
             {% endif %}
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">اضافه کردن</button>
             </div>
-            </div>
+        </div>
     </form>
 </div>
 {% endblock main %}
