@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Answer, Test, Examinee, Question
+from .models import Answer, Test, Examinee, Question, Choice
 
 
 admin.site.index_title = "Site admin"
@@ -10,6 +10,11 @@ admin.site.site_header = "Administration"
 
 class AnswerInline(admin.StackedInline):
     model = Answer
+    extra = 0
+
+
+class ChoiceInline(admin.StackedInline):
+    model = Choice
     extra = 0
 
 
@@ -24,7 +29,7 @@ class TestAdmin(admin.ModelAdmin):
 
     date_hierarchy = "date"
 
-    search_fields = ["title", "author__first_name", "author__last_name"]
+    search_fields = ["title"]
 
 
 @admin.register(Examinee)
@@ -43,9 +48,18 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ["examinee", "question", "choice"]
-    list_editable = ["choice"]
     list_display_links = ["examinee", "question"]
-    list_filter = ["choice", "examinee"]
+    list_filter = ["choice__text", "examinee"]
 
     search_fields = ["examinee"]
     raw_id_fields = ["question"]
+
+
+@admin.register(Choice)
+class ChoiceAdmin(admin.ModelAdmin):
+    list_display = ["text", "test"]
+    list_editable = ["test"]
+    list_filter = ["test"]
+
+    search_fields = ["test"]
+    raw_id_fields = ["test"]
