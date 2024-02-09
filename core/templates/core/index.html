@@ -7,10 +7,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'index/sign-in/style.css' %}" />
     <link rel="shortcut icon" href="{% static 'index/sign-in/img/XzItM.png' %}" type="image/x-icon" />
-    <title>ورود</title>
+    <title>تست شخصیت | ورود</title>
 </head>
 
 <body>
+    <div class="btns-div">
+        <button class="btn" onclick="location.href='{% url 'admin:index' %}'">ادمین</button>
+        <button class="btn" onclick="location.href='{% url 'core:dashboard' %}'">داشبورد</button>
+    </div>
     <div class="conteiner">
         <form method="post">
             {% csrf_token %}

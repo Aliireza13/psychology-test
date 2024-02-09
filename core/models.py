@@ -35,7 +35,7 @@ class Question(models.Model):
     question = models.TextField()
 
     def __str__(self) -> str:
-        return " ".join(self.question.split()[:5])
+        return (" ".join(self.question.split()[:5])) + " ..."
 
     class Meta:
         verbose_name = "سوال"

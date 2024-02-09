@@ -1,7 +1,8 @@
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django import forms
-from .models import Examinee
+
+from .models import Choice, Examinee
 
 
 # Create your forms here.
@@ -29,3 +30,7 @@ class SignInUserForm(AddUserForm):
         except Http404:
             raise forms.ValidationError(f"کاربری با اسم \"{name}\" ثبت نشده است!")
         return name
+
+
+class QuestionForm(forms.Form):
+    choice = forms.ChoiceField(widget=forms.RadioSelect)

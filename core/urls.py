@@ -13,5 +13,5 @@ urlpatterns = [
     path("dashboard/user/<int:user_id>/<int:test_id>/", views.user_answers, name="user_answers"),
 
     path("", views.index, name="index"),
-    path("test/<str:username>/<int:pk>/", views.index, name="index"),
+    path("test/<str:username>/<int:pk>/", views.do_test, name="do_test"),
 ]

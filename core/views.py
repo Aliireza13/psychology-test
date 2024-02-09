@@ -2,9 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
+from django.forms import formset_factory
+
 
 from .models import Examinee, Test, Answer, Question
-from .forms import AddUserForm, SignInUserForm
+from .forms import AddUserForm, QuestionForm, SignInUserForm
 from itertools import chain
 
 
@@ -67,3 +69,21 @@ def index(request: HttpRequest):
         form = SignInUserForm()
     context = {"form": form}
     return render(request, "core/index.html", context)
+
+
+def do_test(request: HttpRequest, username:str, pk:int):
+    test: Test = get_object_or_404(Test, id=pk)
+    q_count = test.questions.all().count()
+    QuestionFormSet = formset_factory(QuestionForm, extra=q_count)
+    if request.method == "POST":
+        # print(request.POST)
+        formset = QuestionFormSet(request.POST)
+        if formset.is_valid():
+            print(formset.cleaned_data)
+        else:
+            print("Not valid")
+    else:
+        formset = QuestionFormSet()
+
+    context = {"q_count": q_count, "formset": formset, "test": test}
+    return render(request, "core/test.html", context)
