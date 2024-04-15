@@ -6,11 +6,12 @@ from django.forms import formset_factory
 
 
 from .models import Examinee, Test, Answer, Question
-from .forms import AddUserForm, QuestionForm, SignInUserForm
+from .forms import AddUserForm, SignInUserForm
 from itertools import chain
 
 
 # Create your views here.
+# Dashboard : Home
 @login_required
 def dashboard(request: HttpRequest):
     query = request.GET.get("query")
@@ -25,6 +26,7 @@ def dashboard(request: HttpRequest):
     return render(request, "dashboard/index.html", context)
 
 
+# Dashboard : User's information
 @login_required
 def user_detail(request: HttpRequest, user_id: int):
     user: Examinee = get_object_or_404(Examinee, id=user_id)
@@ -33,6 +35,7 @@ def user_detail(request: HttpRequest, user_id: int):
     return render(request, "dashboard/user_info.html", context)
 
 
+# Dashboard : User's answers to a test
 @login_required
 def user_answers(request: HttpRequest, user_id: int, test_id: int):
     user: Examinee = get_object_or_404(Examinee, id=user_id) # Get user
@@ -59,6 +62,7 @@ def add_user(request: HttpRequest):
     return render(request, "dashboard/add_user.html", context)
 
 
+# Home
 def index(request: HttpRequest):
     if request.method == "POST":
         form = SignInUserForm(request.POST)
@@ -71,19 +75,11 @@ def index(request: HttpRequest):
     return render(request, "core/index.html", context)
 
 
+# Do test
 def do_test(request: HttpRequest, username:str, pk:int):
     test: Test = get_object_or_404(Test, id=pk)
-    q_count = test.questions.all().count()
-    QuestionFormSet = formset_factory(QuestionForm, extra=q_count)
     if request.method == "POST":
-        # print(request.POST)
-        formset = QuestionFormSet(request.POST)
-        if formset.is_valid():
-            print(formset.cleaned_data)
-        else:
-            print("Not valid")
-    else:
-        formset = QuestionFormSet()
+        breakpoint()
 
-    context = {"q_count": q_count, "formset": formset, "test": test}
+    context = {"test": test}
     return render(request, "core/test.html", context)

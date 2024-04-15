@@ -2,7 +2,7 @@ from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django import forms
 
-from .models import Choice, Examinee
+from .models import Examinee
 
 
 # Create your forms here.
@@ -22,7 +22,7 @@ class AddUserForm(forms.Form):
 
 
 class SignInUserForm(AddUserForm):
-    
+
     def clean_name(self):
         name = self.cleaned_data.get("name")
         try:
@@ -32,5 +32,3 @@ class SignInUserForm(AddUserForm):
         return name
 
 
-class QuestionForm(forms.Form):
-    choice = forms.ChoiceField(widget=forms.RadioSelect)
