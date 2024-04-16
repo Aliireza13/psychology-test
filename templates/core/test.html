@@ -150,8 +150,8 @@
                 {% for choice in test.choices.all %}
                 {% with forloop.counter as choice_id %}
                 <div class="flex w-[24%] justify-between{% if forloop.counter == 1 %} pt-[39px]{% endif %}">
-                    <input type="radio" name="form-{{ form_id|add:'-1' }}-choice" value="{{ choice.score }}" />
                     <label for="id_form-{{ forloop.counter|add:'-1'}}-choice{{ choice_id }}">
+                        <input for="id_form-{{ form_id|add:'-1' }}_answer_{{ choice_id|add:'-1' }}" type="radio" name="form-{{ form_id|add:'-1' }}-answer" value="{{ choice.score }}"/>
                         {{ choice.text }}
                     </label>
                 </div>
@@ -168,6 +168,15 @@
             </div>
         </div>
     </form>
+    <!-- <form method="post">
+        {% csrf_token %}
+        {{ formset.management_form.as_p }}
+
+        {% for form in formset.forms %}
+            {{ form.as_p }}
+        {% endfor %}
+
+    </form> -->
     <!-- END FORM -->
 </body>
 </html>
