@@ -18,10 +18,16 @@ class ChoiceInline(admin.StackedInline):
     extra = 0
 
 
+class QuestionInline(admin.StackedInline):
+    model = Question
+    extra = 0
+
+
+
 # Register your models here
 @admin.register(Test)
 class TestAdmin(admin.ModelAdmin):
-    list_display = ["title", "date"]
+    list_display = ["id", "title", "date"]
     list_display_links = ["title" ,"date"]
     list_filter = ["date"]
 
@@ -31,25 +37,25 @@ class TestAdmin(admin.ModelAdmin):
 
     search_fields = ["title"]
 
-    inlines = (ChoiceInline, )
+    inlines = (ChoiceInline, QuestionInline)
 
 
 @admin.register(Examinee)
 class ExamineeInline(admin.ModelAdmin):
-    list_display = ["name"]
+    list_display = ["id", "name"]
     list_display_links = list_display
     inlines = (AnswerInline,)
 
 
 @admin.register(Question)
 class QuestionAdmin(admin.ModelAdmin):
-    list_display = ["test", Question.__str__]
+    list_display = ["id", "test", Question.__str__]
     list_display_links = list_display
 
 
 @admin.register(Answer)
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ["examinee", "question", "choice"]
+    list_display = ["id", "examinee", "question", "choice"]
     list_display_links = ["examinee", "question"]
     list_filter = ["choice__text", "examinee"]
 
@@ -58,8 +64,9 @@ class AnswerAdmin(admin.ModelAdmin):
 
 @admin.register(Choice)
 class ChoiceAdmin(admin.ModelAdmin):
-    list_display = ["text", "test"]
-    list_display_links = list_display
+    list_display = ["id", "text", "score","test"]
+    list_editable = ["text", "score"]
+    list_display_links = ["test"]
     list_filter = ["test"]
 
     search_fields = ["test"]
