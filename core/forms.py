@@ -1,7 +1,7 @@
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 from django import forms
-
+from django.db import models
 from .models import Examinee
 
 
@@ -32,3 +32,21 @@ class SignInUserForm(AddUserForm):
         return name
 
 
+class FourChoiceAnsForm(forms.Form):
+    class Choice(models.TextChoices):
+        ONE = "1", "1"
+        TWO = "2", "2"
+        THREE = "3", "3"
+        FOUR = "4", "4"
+    answer = forms.ChoiceField(choices=Choice, widget=forms.RadioSelect, required=True)
+
+
+
+class FiveChoiceAnsForm(forms.Form):
+    class Choice(models.TextChoices):
+        ONE = "1", "1"
+        TWO = "2", "2"
+        THREE = "3", "3"
+        FOUR = "4", "4"
+        FIVE = "5", "5"
+    answer = forms.ChoiceField(choices=Choice, widget=forms.RadioSelect, required=True)
