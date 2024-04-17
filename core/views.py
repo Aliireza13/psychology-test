@@ -123,7 +123,7 @@ def index(request: HttpRequest):
 
 def do_test(request: HttpRequest, username:str, pk:int):
     test: Test = get_object_or_404(Test, id=pk)
-    examinee = get_object_or_404(Examinee, username=username)
+    examinee = get_object_or_404(Examinee, name=username)
     if check_done(test, examinee):
         next = has_next(pk)
         if next:
