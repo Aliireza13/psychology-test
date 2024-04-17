@@ -1,5 +1,13 @@
+@font-face {
+    font-family: Tanha;
+    src: url('Tanha.eot');
+    src: url('Tanha.eot?#iefix') format('embedded-opentype'),
+      url('Tanha.woff') format('woff'), url('Tanha.ttf') format('truetype');
+    font-weight: normal;
+  }
+
 body {
-    background: #8bc34a;
+    background: #25db9c;
 }
 
 #card {
@@ -28,7 +36,7 @@ body {
 }
 
 #status {
-    font-weight: lighter;
+    font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 2px;
     font-size: 1em;
@@ -45,12 +53,14 @@ body {
 }
 
 #message {
+    font-weight: bold;
     margin-top: -.5em;
     color: #757575;
     letter-spacing: 1px;
 }
 
 #contBtn {
+    font-weight: bold;
     position: relative;
     top: 1.5em;
     text-decoration: none;
