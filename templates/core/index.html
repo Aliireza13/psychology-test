@@ -1,25 +1,29 @@
+{% extends 'base/index.html' %}
 {% load static %}
 <!DOCTYPE html>
-<html lang="fa-ir" dir="rtl">
 
-<head>
-    <meta charset="UTF-8" />
+{% block extrastyles %}
+    <html lang="fa-ir" dir="rtl">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="{% static 'index/sign-in/style.css' %}" />
     <link rel="shortcut icon" href="{% static 'index/sign-in/img/XzItM.png' %}" type="image/x-icon" />
-    <title>تست شخصیت | ورود</title>
-</head>
-
+{% endblock extrastyles %}
+{% block title %}
+تست شخصیت | ورود
+{% endblock title %}
+{% block content %}
 <body>
+    {% if user.is_superuser %}
     <div class="btns-div">
         <button class="btn" onclick="location.href='{% url 'admin:index' %}'">ادمین</button>
         <button class="btn" onclick="location.href='{% url 'core:dashboard' %}'">داشبورد</button>
     </div>
+    {% endif %}
     <div class="conteiner">
         <form method="post">
             {% csrf_token %}
-            <p>لطفا اسم خود را وارد کنید</p>
-            <input type="text" placeholder="اسم شما" required name="name" />
+            <p>کد خود را وارد کنید</p>
+            <input type="text" placeholder="کد شما" required name="name" />
             <div class="error-form">
                 {% if form.name.errors %} <br />
                 {% for error in form.name.errors %}<br />
@@ -30,7 +34,6 @@
             <button type="submit">مشاهده سوالات</button>
         </form>
         <div class="blur-form"></div>
-    </div>
+        </div>
 </body>
-
-</html>
+{% endblock content %}

@@ -1,14 +1,14 @@
 from django.forms import formset_factory
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
-from django.core.exceptions import ObjectDoesNotExist
 from django.forms import formset_factory
 
 
 from .models import Examinee, Test, Answer, Question
 from .forms import AddUserForm, SignInUserForm, FourChoiceAnsForm, FiveChoiceAnsForm
+from . utils import is_test_done
 from itertools import chain
 
 
@@ -71,65 +71,27 @@ def index(request: HttpRequest):
         if form.is_valid():
             name = form.cleaned_data.get("name")
             test = Test.objects.first()
-            return redirect("core:do_test", username=name, pk=test.id)
+            return redirect("core:check_user", username=name)
     else:
         form = SignInUserForm()
     context = {"form": form}
     return render(request, "core/index.html", context)
 
 
-# Do test
-# def do_test(request: HttpRequest, username:str, pk:int):
-#     test: Test = get_object_or_404(Test, id=pk)
-#     examinee = Examinee.objects.get(name=username)
-#     check = test.questions.answers.filter(examinee=examinee)
-#     if check:
-#         if has_next(pk):
-#             return redirect("core:do_test", username=username, pk=next.id)
-#         else:
-#             return HttpResponse("You have alreay done the quiz")
-#     context = {}
-#     context.update({"test": test})
-
-#     if request.method == "POST":
-
-#         data = request.POST.dict()
-#         del data["csrfmiddlewaretoken"]
-#         if len(data) < test.questions.count(): # Check if user fill all questions
-#             context.update({"error": "لطفا فرم را کاملا پر کنید!"})
-#             return render(request, "core/test.html", context)
-
-#         for ans in data.items():
-#             q_id = (ans[0].replace("q-", ""))
-#             try :
-#                 question = test.questions.get(id=q_id)
-#                 choice = test.choices.get(score=ans[1])
-#             except ObjectDoesNotExist:
-#                 context.update({"error": "خطایی رخ داد, دوباره امتحان کنید"})
-#                 return render(request, "core/test.html", context=context)
-
-#             answer = Answer.objects.create(
-#                 examinee=examinee,
-#                 question=question,
-#                 choice=choice
-#                 )
-
-#         if has_next:
-#             return redirect("core:do_test", username=username, pk=next.id)
-#         else:
-#             return HttpResponse("SUCCESSFUL")
-#     return render(request, "core/test.html", context)
-
-
-def do_test(request: HttpRequest, username:str, pk:int):
-    test: Test = get_object_or_404(Test, id=pk)
+def check_user(request: HttpRequest, username: str):
+    tests = Test.objects.all()
     examinee = get_object_or_404(Examinee, name=username)
-    if check_done(test, examinee):
-        next = has_next(pk)
-        if next:
-            return redirect("core:do_test", username=username, pk=next.id)
-        else:
-            return HttpResponse("You have alreay done the quiz")
+    for test in tests:
+        if not is_test_done(test, examinee):
+            return do_test(request, examinee, test)
+    return success(request, examinee)
+
+
+def success(request: HttpRequest, examinee: Examinee):
+    return render(request, "core/test_done.html", {"examinee": examinee})
+
+
+def do_test(request: HttpRequest, examinee: Examinee, test: Test):
     context = {}
     context.update({"test": test})
 
@@ -155,24 +117,9 @@ def do_test(request: HttpRequest, username:str, pk:int):
                     question=q,
                     choice=choice
                 )
-            next = has_next(pk)
-            if next:
-                return redirect("core:do_test", username=username, pk=next.id)
+            return redirect("core:check_user", username=examinee.name)
     else:
         formset = FormSet()
 
     context.update({"formset": formset})
     return render(request, "core/test.html", context)
-
-
-def has_next(test_id):
-    "Check if examinee has another test to done"
-    next = Test.objects.filter(id__gt=test_id).first()
-    if next: return next
-    else: return False
-
-def check_done(test, examinee):
-    "Check if examinee has done given test"
-    next = Answer.objects.filter(question__test=test, examinee=examinee)
-    if next: return True
-    else: return False

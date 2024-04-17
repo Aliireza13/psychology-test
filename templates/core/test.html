@@ -1,12 +1,14 @@
+{% extends 'base/index.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fa-ir" class="" dir="rtl">
 
-<head>
-    <meta charset="UTF-8" />
+{% block title %}
+تست شخصیت | سوالات
+{% endblock title %}
+
+{% block extrastyles %}
+    <html lang="fa-ir" dir="rtl">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="{% static 'index/public/imges/3764135.jpg' %}" type="image/x-icon" />
-    <title>تست شخصیت | سوالات</title>
     <link rel="stylesheet" href="{% static 'index/public/styles/style.css' %}" />
     <style>
         .header a:hover {
@@ -131,7 +133,9 @@
             }
         }
     </style>
-</head>
+{% endblock extrastyles %}
+
+{% block content %}
 <body class="body relative" style="background-image: url({% static 'index/public/imges/3764135.jpg' %})">
     <!-- START FORM -->
     <form id="myForm" method="post"
@@ -179,4 +183,5 @@
     </form> -->
     <!-- END FORM -->
 </body>
+{% endblock content %}
 </html>
