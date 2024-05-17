@@ -1,0 +1,3 @@
+// document.querySelector(".next-btn").addEventListener("click", function () {
+//   document.querySelector(".question").textContent = `hello`;
+// });
