@@ -78,19 +78,40 @@ WSGI_APPLICATION = 'psychology_test.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'psychology_test',
-        'USER': 'root',
-        'PASSWORD': 'mySQL@Rm13',
-        'PORT': '3306',
-        "HOST": '127.0.0.1',
-        'OPTIONS': {
-            'sql_mode': 'traditional',
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'psychology_test',
+#         'USER': 'root',
+#         'PASSWORD': 'mySQL@Rm13',
+#         'PORT': '3306',
+#         "HOST": '127.0.0.1',
+#         'OPTIONS': {
+#             'sql_mode': 'traditional',
+#         }
+#     }
+# }
+
+if config("ENGINE") == "sqlite3":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite",
         }
     }
-}
+elif config("ENGINE") == "mysql":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': config("NAME"),
+            "USER": config("USER"),
+            "PASSWORD": config("PASSWORD"),
+            "HOST": config("HOST"),
+            'OPTIONS': {
+                'sql_mode': 'traditional',
+            }
+        }
+    }
 
 
 # Password validation
