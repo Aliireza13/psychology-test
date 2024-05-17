@@ -80,11 +80,15 @@ WSGI_APPLICATION = 'psychology_test.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'psychology_test',
-        'USER': 'psychology_admin',
-        'PASSWORD': '12345678',
-        'PORT': '5432',
+        'USER': 'root',
+        'PASSWORD': 'mySQL@Rm13',
+        'PORT': '3306',
+        "HOST": '127.0.0.1',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+        }
     }
 }
 

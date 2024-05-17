@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from django.contrib.auth.decorators import login_required
 from django.contrib.postgres.search import TrigramSimilarity
 from django.forms import formset_factory
-
+from django.db.models import Q
 
 from .models import Examinee, Test, Answer, Question
 from .forms import AddUserForm, SignInUserForm, FourChoiceAnsForm, FiveChoiceAnsForm
@@ -18,9 +18,7 @@ from itertools import chain
 def dashboard(request: HttpRequest):
     query = request.GET.get("query")
     if query:
-        examinees = Examinee.objects.annotate(
-            similarity=TrigramSimilarity("name", query)
-        ).filter(similarity__gt=0.1)
+        examinees = Examinee.objects.filter(Q(name__icontains=query))
     else:
         examinees = Examinee.objects.all().order_by("-date")
 
@@ -56,7 +54,7 @@ def add_user(request: HttpRequest):
     if request.method == "POST":
         form = AddUserForm(request.POST)
         if form.is_valid():
-            examinee = Examinee.objects.create(name=form.cleaned_data.get('name'))
+            Examinee.objects.create(name=form.cleaned_data.get('name'))
             return redirect("core:dashboard")
     else:
         form = AddUserForm()
@@ -70,7 +68,6 @@ def index(request: HttpRequest):
         form = SignInUserForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data.get("name")
-            test = Test.objects.first()
             return redirect("core:check_user", username=name)
     else:
         form = SignInUserForm()
